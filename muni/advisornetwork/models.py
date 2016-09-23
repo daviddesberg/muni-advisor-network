@@ -19,6 +19,7 @@ class Delegate(models.Model):
     position = models.CharField(max_length=500)
     committee = models.CharField(max_length=500)
     hotel_room_number = models.CharField(max_length=500)
+    school = models.ForeignKey(School)
 
 
 class Advisor(models.Model):
@@ -26,4 +27,6 @@ class Advisor(models.Model):
     email = models.CharField(max_length=500)
     work_phone_number = models.CharField(max_length=20)
     mobile_phone_number = models.CharField(max_length=20)
+    school = models.ForeignKey(School)
+
 
