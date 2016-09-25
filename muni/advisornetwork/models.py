@@ -16,17 +16,18 @@ class School(models.Model):
 
 class Delegate(models.Model):
     name = models.CharField(max_length=500)
-    position = models.CharField(max_length=500)
-    committee = models.CharField(max_length=500)
-    hotel_room_number = models.CharField(max_length=500)
+    position = models.CharField(max_length=500, blank=True)
+    committee = models.CharField(max_length=500, blank=True)
+    hotel_room_number = models.CharField(max_length=500, blank=True)
     school = models.ForeignKey(School)
 
 
 class Advisor(models.Model):
     name = models.CharField(max_length=500)
     email = models.CharField(max_length=500)
-    work_phone_number = models.CharField(max_length=20)
+    work_phone_number = models.CharField(max_length=20, blank=True)
     mobile_phone_number = models.CharField(max_length=20)
+    hotel_room_number = models.CharField(max_length=20, blank=True)
     school = models.ForeignKey(School)
 
 
