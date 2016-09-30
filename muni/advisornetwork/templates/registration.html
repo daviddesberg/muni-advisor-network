@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load bootstrap3 %}
+<header class="imageheader registrationheader">
+    <div class="header-content">
+        <div class="header-content-inner">
+            <h1 id="main-heading"><span>Registration</span></h1>
+        </div>
+    </div>
+</header>
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1>Registration</h1>
+                <p>
+                    Before filling out and submitting this registration form, please make sure that you have carefully read our Financial Policy and Registration Process located on the registration page of our website as well as within your Advisor Handbook. You can also click here to be directed to it. Any questions or concerns pertaining to our Financial Policy and Registration Process, this form, and any and all registration related issues can be directed to our Under Secretary General of Registration, John Hall, at registration [at] illinoismun [dot] org
+                </p>
+                <form action="/register" method="post">
+                    {% csrf_token %}
+                    {% bootstrap_field form.school_name %}
+                    {% bootstrap_field form.school_address %}
+                    {% bootstrap_field form.school_phone %}
+                    {% bootstrap_field form.initial_advisor_name %}
+                    {% bootstrap_field form.initial_advisor_email %}
+                    {% bootstrap_field form.initial_password %}
+                    {% bootstrap_field form.rough_number_of_delegates %}
+
+                    <strong>Will your delegation require transportation during the conference?</strong><br>
+                    <small>
+                        (Our conference is held on campus at the University of Illinois. However, the conference hotel, the Wyndham Garden, is is located off campus. Conference transportation comes in the form of coach busses taking you and your delegation to and from the conference location and hotel throughout the weekend. There is a $50 Transportation Fee that covers you and your entire delegation throughout the conference should you sign up for transportation.)
+                    </small>
+                    {% bootstrap_field form.transportation_required show_label=False %}
+
+                    <h3>Position Preferences</h3>
+                    <p>
+                        Below is an opportunity for your delegation to let us know which countries, positions and committees your delegates prefer. We cannot guarantee your top choices, but the sooner you register, the better the chances for your school.
+                    </p>
+                    {% bootstrap_field form.crisis_interested %}
+                    {% bootstrap_field form.ipd_position_interested %}
+
+                    <br>
+                    <strong>Below, please list your delegation’s top three country preferences:</strong><br><br>
+                    {% bootstrap_field form.country_pref_1 show_label=False %}
+                    {% bootstrap_field form.country_pref_2 show_label=False %}
+                    {% bootstrap_field form.country_pref_3 show_label=False %}
+
+                    {% bootstrap_field form.additional_notes %}
+
+                    {% buttons %}
+                    <button type="submit" class="btn btn-primary">
+                        {% bootstrap_icon "star" %} Register
+                    </button>
+                    {% endbuttons %}
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}
