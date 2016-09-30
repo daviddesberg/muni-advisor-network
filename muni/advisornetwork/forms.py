@@ -1,12 +1,14 @@
 from django import forms
 from phonenumber_field.formfields import PhoneNumberField
+from phonenumber_field.widgets import PhoneNumberInternationalFallbackWidget
 
 
 class RegistrationForm(forms.Form):
     school_name = forms.CharField()
     school_address = forms.CharField(widget=forms.Textarea(attrs={'style': 'height:50px;'}))
-    school_phone = PhoneNumberField()
+    school_phone = PhoneNumberField(widget=PhoneNumberInternationalFallbackWidget)
     initial_advisor_name = forms.CharField()
+    initial_advisor_mobile_phone = PhoneNumberField(widget=PhoneNumberInternationalFallbackWidget)
     initial_advisor_email = forms.EmailField()
     rough_number_of_delegates = forms.IntegerField()
 
@@ -20,7 +22,7 @@ class RegistrationForm(forms.Form):
         coerce=int
     )
 
-    initial_password = forms.CharField(widget=forms.PasswordInput)
+    initial_password = forms.CharField(widget=forms.PasswordInput, min_length=8)
 
     crisis_interested = forms.TypedChoiceField(
         label="Is your delegation interested in Crisis Committees?",
@@ -42,8 +44,8 @@ class RegistrationForm(forms.Form):
         coerce=int
     )
 
-    country_pref_1 = forms.CharField(label="Insert Country Name")
-    country_pref_2 = forms.CharField(label="Insert Country Name")
-    country_pref_3 = forms.CharField(label="Insert Country Name")
+    country_pref_1 = forms.CharField(label="Insert Country Name", required=False)
+    country_pref_2 = forms.CharField(label="Insert Country Name", required=False)
+    country_pref_3 = forms.CharField(label="Insert Country Name", required=False)
 
-    additional_notes = forms.CharField(widget=forms.Textarea(attrs={'style': 'height:80px;'}))
+    additional_notes = forms.CharField(widget=forms.Textarea(attrs={'style': 'height:80px;'}), required=False)

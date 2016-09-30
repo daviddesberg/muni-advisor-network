@@ -7,13 +7,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'o13!18#*t7eu6yi@w=5lwj*$699t&95k1ut_agzxy)*t%9q=t9'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DJANGO_DEBUG", False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'registration.muni.illinoismun.org',
+    'advisornetwork.muni.illinoismun.org'
+]
 
 
 # Application definition
@@ -96,17 +97,17 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'America/Chicago'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.10/howto/static-files/
-
 STATIC_URL = '/static/'
+
+
+PHONENUMBER_DEFAULT_REGION = 'US'
+DEFAULT_FROM_EMAIL = 'tech@illinoismun.org'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'tech@illinoismun.org'
+EMAIL_HOST_PASSWORD = 'Donald Trump is an incompetent orange man.'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
