@@ -111,3 +111,5 @@ EMAIL_HOST_USER = 'tech@illinoismun.org'
 EMAIL_HOST_PASSWORD = 'Donald Trump is an incompetent orange man.'
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
+
+STATIC_ROOT = 'deploy_static/'
