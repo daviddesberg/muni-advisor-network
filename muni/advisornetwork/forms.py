@@ -7,9 +7,10 @@ class RegistrationForm(forms.Form):
     school_name = forms.CharField()
     school_address = forms.CharField(widget=forms.Textarea(attrs={'style': 'height:50px;'}))
     school_phone = PhoneNumberField(widget=PhoneNumberInternationalFallbackWidget)
-    initial_advisor_name = forms.CharField()
-    initial_advisor_mobile_phone = PhoneNumberField(widget=PhoneNumberInternationalFallbackWidget)
-    initial_advisor_email = forms.EmailField()
+    initial_advisor_name = forms.CharField(label="Primary advisor name")
+    initial_advisor_mobile_phone = PhoneNumberField(widget=PhoneNumberInternationalFallbackWidget,
+                                                    label="Primary advisor mobile phone")
+    initial_advisor_email = forms.EmailField(label="Initial advisor email")
     rough_number_of_delegates = forms.IntegerField()
 
     transportation_required = forms.TypedChoiceField(
