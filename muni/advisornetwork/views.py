@@ -1,9 +1,11 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
-from django.core.mail import send_mail
+from django.core.mail import EmailMessage
 from .forms import RegistrationForm
 from .models import School, Advisor
+from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 
 
 def home(request):
@@ -12,6 +14,40 @@ def home(request):
 
 def thanks(request):
     return render(request, 'thanks.html')
+
+
+@login_required()
+def mark_school_paid(request):
+    school = School.objects.get(user_account=request.user)
+    school.marked_paid_at = timezone.now()
+    school.save()
+
+    return HttpResponseRedirect('/')
+
+
+@login_required()
+def mark_delegate_paid(request):
+    school = School.objects.get(user_account=request.user)
+    school.marked_paid_delegate_fee = timezone.now()
+    school.save()
+
+    return HttpResponseRedirect('/')
+
+
+@login_required()
+def mark_transit_paid(request):
+    school = School.objects.get(user_account=request.user)
+    school.marked_paid_transit_fee = timezone.now()
+    school.save()
+
+    return HttpResponseRedirect('/')
+
+
+@login_required()
+def main(request):
+    school = School.objects.get(user_account=request.user)
+
+    return render(request, 'main.html', {'school': school})
 
 
 def register(request):
@@ -63,12 +99,16 @@ David Desberg
 USG Tech - MUNI XXII
             """ % init_advisor.name
 
-            send_mail(
+            email = EmailMessage(
                 "MUNI XXII Registration and Advisor Network Info",
                 msg,
-                "tech@illinoismun.org",
+                'tech@illinoismun.org',
                 [init_advisor.email],
+                ['registration@illinoismun.org', 'secgen@illinoismun.org'],
+                reply_to=['registration@illinoismun.org']
             )
+
+            email.send()
 
             return HttpResponseRedirect("/thanks")
 

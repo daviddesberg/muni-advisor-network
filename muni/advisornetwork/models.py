@@ -15,7 +15,9 @@ class School(models.Model):
     user_account = models.OneToOneField(User)
     additional_registration_notes = models.TextField(blank=True)
 
-    marked_paid_at = models.DateTimeField(null=True, blank=True)
+    marked_paid_at = models.DateTimeField(null=True, blank=True)  # for school fee
+    marked_paid_transit_fee = models.DateTimeField(null=True, blank=True)
+    marked_paid_delegate_fee = models.DateTimeField(null=True, blank=True)
 
     # MUNI trackin'
     paid_school_fee = models.BooleanField(default=False)

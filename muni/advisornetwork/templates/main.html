@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+<header class="imageheader registrationheader">
+    <div class="header-content">
+        <div class="header-content-inner">
+            <h1 id="main-heading"><span>ADVISOR NETWORK</span></h1>
+        </div>
+    </div>
+</header>
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1>Advisor Network &mdash; Home</h1>
+                <h2>{{ school.name }}</h2>
+
+                Below, you may update the current status of your payments. More functionality will be available soon.<br><br>
+
+                {% if school.marked_paid_at == null %}
+                <a href="/mark-school-paid">Mark school fee as paid</a><br>
+                {% else %}
+                You have already marked your school fee as paid.<br>
+                {% endif %}
+
+                {% if school.transportation_required %}
+                {% if school.marked_paid_transit_fee == null %}
+                <a href="/mark-transit-paid">Mark transit fee as paid</a><br>
+                {% else %}
+                You have already marked your transit fee as paid.<br>
+                {% endif %}
+                {% endif %}
+
+                {% if school.marked_paid_delegate_fee == null %}
+                <a href="/mark-delegate-paid">Mark delegate fee as paid</a><br>
+                {% else %}
+                You have already marked your delegate fee as paid.<br>
+                {% endif %}
+
+
+                <br>
+                <a href="/logout?next=/" title="Logout">Click here to logout</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
