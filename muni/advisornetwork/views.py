@@ -45,7 +45,10 @@ def mark_transit_paid(request):
 
 @login_required()
 def main(request):
-    school = School.objects.get(user_account=request.user)
+    try:
+        school = School.objects.get(user_account=request.user)
+    except:
+        school = None
 
     return render(request, 'main.html', {'school': school})
 
