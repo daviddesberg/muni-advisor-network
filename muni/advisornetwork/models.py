@@ -15,9 +15,14 @@ class School(models.Model):
     user_account = models.OneToOneField(User)
     additional_registration_notes = models.TextField(blank=True)
 
+    marked_paid_at = models.DateTimeField(null=True, blank=True)
+
     # MUNI trackin'
     paid_school_fee = models.BooleanField(default=False)
     paid_delegate_fees = models.BooleanField(default=False)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
@@ -30,6 +35,9 @@ class Delegate(models.Model):
     hotel_room_number = models.CharField(max_length=500, blank=True)
     school = models.ForeignKey(School)
 
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
     def __str__(self):
         return "%s (School %s)" % (self.name, str(self.school))
 
@@ -41,6 +49,9 @@ class Advisor(models.Model):
     mobile_phone_number = PhoneNumberField()
     hotel_room_number = models.CharField(max_length=20, blank=True)
     school = models.ForeignKey(School)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return "%s (School %s)" % (self.name, str(self.school))
