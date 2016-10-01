@@ -133,7 +133,7 @@ LOGGING = {
         'file': {
             'level': 'WARNING',
             'class': 'logging.FileHandler',
-            'filename': 'advisornet.log',
+            'filename': '/var/www/advisornetwork/log/advisornet.log',
             'formatter': 'verbose'
         },
     },
