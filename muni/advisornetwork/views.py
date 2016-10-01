@@ -93,17 +93,28 @@ def register(request):
 
             # Send initial email
             msg = """
-Dear %s,
-Thank you for registering for MUNI XXII. To manage your registration, including advisor information and delegate rosters, you may login to the MUNI XXII Advisor Network using your email address and the password you specified at registration.
-The network is accessible at http://advisornetwork.muni.illinoismun.org
+Thank you for registering to attend MUNI XXII!
 
-Thanks,
-David Desberg
-USG Tech - MUNI XXII
-            """ % init_advisor.name
+We look forward to making our conference a fantastic experience for both you and your delegates. Below you will find your login and password for our Advisor Network. Within two days, you will receive an invoice outlining all required fees you must pay to attend our conference.
+
+Advisor Network Login: %s
+
+Advisor Network Password: %s
+
+The link to login is: http://advisornetwork.muni.illinoismun.org
+
+I am excited to work with you further to make your pre-conference registration work as stress free and enjoyable as possible. Please feel free to contact me anytime with all of your MUNI related questions, comments, and concerns at registration@illinoismun.org.
+
+Best,
+
+John Hall
+University of Illinois at Urbana-Champaign | Class of 2019
+College of Liberal Arts & Sciences | Global Studies
+Under Secretary General of Registration | MUNI XXII
+            """ % (init_advisor.email, form.cleaned_data["initial_password"])
 
             email = EmailMessage(
-                "MUNI XXII Registration and Advisor Network Info",
+                "MUNI XXII Registration Confirmation",
                 msg,
                 'tech@illinoismun.org',
                 [init_advisor.email],
