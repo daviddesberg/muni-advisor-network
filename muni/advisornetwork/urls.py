@@ -14,4 +14,17 @@ urlpatterns = [
     url(r'mark-school-paid', views.mark_school_paid, name='mark_school_paid'),
     url(r'mark-delegate-paid', views.mark_delegate_paid, name='mark_delegate_paid'),
     url(r'mark-transit-paid', views.mark_transit_paid, name='mark_transit_paid'),
+
+    # /advisor/{id}/delete
+    url(r'advisor/(?P<advisor>[0-9]+)/delete', views.advisor_delete, name='advisor_delete'),
+
+    # /delegate/{id}/delete
+    url(r'delegate/(?P<delegate>[0-9]+)/delete', views.delegate_delete, name='delegate_delete'),
+
+    # /addadvisor
+    url(r'addadvisor', views.add_advisor, name='add_advisor'),
+
+    # /adddelegate
+    url(r'adddelegate', views.add_delegate, name='add_delegate')
+
 ]
