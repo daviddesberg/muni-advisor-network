@@ -51,12 +51,14 @@
 
                 <h2>Registration Form</h2>
                 <p>
-                    Before filling out and submitting this registration form, please make sure that you have carefully read our Financial Policy and Registration Process located on the registration page of our website as well as within your Advisor Handbook. You can also <a target="_blank" href="http://muni.illinoismun.org/assets/forms/financial.pdf">click here</a> to be directed to it. Any questions or concerns pertaining to our Financial Policy and Registration Process, this form, and any and all registration related issues can be directed to our Under Secretary General of Registration, John Hall, at registration [at] illinoismun [dot] org
+                    Before filling out and submitting this registration form, please make sure that you have carefully read our Financial Policy and Registration Process located on the registration page of our website as well as within your Advisor Handbook. You can also <a target="_blank" href="http://muni.illinoismun.org/assets/forms/financial.pdf">click here</a> to be directed to it. Any questions or concerns pertaining to our Financial Policy and Registration Process, this form, and any and all registration related issues can be directed to our Under Secretary General of Registration, John Hall, at registration@illinoismun.org
                 </p>
                 <form action="/register" method="post">
                     {% csrf_token %}
                     {% bootstrap_field form.school_name %}
                     {% bootstrap_field form.school_address %}
+                    <small>Please be sure to specify city, state, and zip code in address.</small>
+
                     {% bootstrap_field form.school_phone %}
                     {% bootstrap_field form.initial_advisor_name %}
                     {% bootstrap_field form.initial_advisor_mobile_phone %}
