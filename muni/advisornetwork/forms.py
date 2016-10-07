@@ -23,7 +23,7 @@ class RegistrationForm(forms.Form):
         coerce=int
     )
 
-    initial_password = forms.CharField(widget=forms.PasswordInput, min_length=8)
+    initial_password = forms.CharField(widget=forms.PasswordInput, min_length=8, label="Password")
 
     crisis_interested = forms.TypedChoiceField(
         label="Is your delegation interested in Crisis Committees?",
