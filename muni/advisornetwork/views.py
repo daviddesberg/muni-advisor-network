@@ -42,15 +42,29 @@ def mark_transit_paid(request):
 
     return HttpResponseRedirect('/')
 
+# @login_required()
+# def advisor_table(request):
+#
+# @login_required()
+# def delegate_table():
 
 @login_required()
 def main(request):
     try:
         school = School.objects.get(user_account=request.user)
+        advisors = school.advisors.all()
+        delegates = school.delegates.all()
     except:
         school = None
+        advisors = None
+        delegates = None
 
-    return render(request, 'main.html', {'school': school})
+    print(advisors)
+    return render(request, 'main.html', {
+        'school': school,
+        'advisors': advisors,
+        'delegates' : delegates
+    })
 
 
 def register(request):

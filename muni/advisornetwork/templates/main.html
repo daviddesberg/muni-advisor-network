@@ -14,9 +14,80 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h1>Advisor Network &mdash; Home</h1>
+                <h1>Advisor Network &mdash; Home
+                </h1>
                 {% if school %}
                 <h2>{{ school.name }}</h2>
+                <h3> Advisor: </h3>
+                <table class="table">
+                    <thead>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone Number (Work)</th>
+                        <th>Phone Number (Mobile)</th>
+                        <th>Hotel Room Number</th>
+                        <th>School</th>
+                    </thead>
+                    <tbody>
+                    {% for advisor in advisors %}
+                    <tr>
+                        <td>{{ advisor.name }}</td>
+                        <td> {{ advisor.email }}</td>
+                        <td> {{ advisor.work_phone_number }}</td>
+                        <td> {{ advisor.mobile_phone_number }}</td>
+                        <td> {{ advisor.hotel_room_number }}</td>
+                        <td> {{ advisor.school }} </td>
+                        {% if advisors.count > 1 %}
+                        <td><a href="#"><i class="fa fa-times-circle"></i></a></td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td><input class="form-control" id="advisorName"  placeholder="Enter advisor name"></td>
+                        <td><input class="form-control" id="advisorEmail" placeholder="Enter advisor email"></td>
+                        <td><input class="form-control" id="advisorWorkPhone" placeholder="Enter advisor work phone number"></td>
+                        <td><input class="form-control" id="advisorMobilePhone" placeholder="Enter advisor mobile number"></td>
+                        <td><input class="form-control" id="advisorHotelRoom"  placeholder="Enter advisor hotel room number"></td>
+                        <td><input class="form-control" id="advisorSchool" placeholder="Enter advisor school"></td>
+                    </tr>
+
+
+                    </tbody>
+                </table>
+
+                 <h3> Delegate: </h3>
+                <table class="table">
+                    <thead>
+                        <th>Name</th>
+                        <th>Position</th>
+                        <th>Comittee</th>
+                        <th>Hotel Room Number</th>
+                        <th>School</th>
+                    </thead>
+                    {% for delegate in delegates %}
+                    <tbody>
+                    <tr>
+                        <td>{{ delegate.name }}</td>
+                        <td> {{ delegate.position }}</td>
+                        <td> {{ delegate.committee }}</td>
+                        <td> {{ delegate.hotel_room_number }}</td>
+                        <td> {{ delegate.school }} </td>
+                        {% if delegates.count > 1 %}
+                        <td><a href="#"><i class="fa fa-times-circle"></i></a></td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td><input class="form-control" id="delegateName"  placeholder="Enter advisor name"></td>
+                        <td><input class="form-control" id="delegateEmail" placeholder="Enter advisor email"></td>
+                        <td><input class="form-control" id="delegateWorkPhone" placeholder="Enter advisor work phone number"></td>
+                        <td><input class="form-control" id="delegateMobilePhone" placeholder="Enter advisor mobile number"></td>
+                        <td><input class="form-control" id="delegateHotelRoom"  placeholder="Enter advisor hotel room number"></td>
+                        <td><input class="form-control" id="delegateSchool" placeholder="Enter advisor school"></td>
+                    </tr>
+                    </tbody>
+
+                </table>
 
                 Below, you may update the current status of your payments. More functionality will be available soon.<br><br>
 
@@ -40,7 +111,10 @@
                 You have already marked your delegate fee as paid.<br>
                 {% endif %}
                 {% endif %}
+
+
                 <br>
+
                 <a href="/logout?next=/" title="Logout">Click here to logout</a>
             </div>
         </div>
