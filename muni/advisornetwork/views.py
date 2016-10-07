@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 from .forms import RegistrationForm
-from .models import School, Advisor
+from .models import School, Advisor, Delegate
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 
@@ -42,11 +42,57 @@ def mark_transit_paid(request):
 
     return HttpResponseRedirect('/')
 
-# @login_required()
-# def advisor_table(request):
-#
-# @login_required()
-# def delegate_table():
+
+@login_required()
+def add_advisor(request):
+    if request.method != 'POST':
+        return HttpResponseRedirect('/')
+
+    name = request.POST['name']
+    email = request.POST['email']
+    work_phone_number = request.POST['work_phone_number']
+    mobile_phone_number = request.POST['mobile_phone_number']
+    hotel_room_number = request.POST['hotel_room_number']
+    school = School.objects.get(user_account=request.user)
+
+    if len(name) < 1 or len(email) < 1 or len(work_phone_number) < 1 or len(mobile_phone_number) < 1 or len(hotel_room_number) < 1:
+        return HttpResponseRedirect('/')
+    else:
+        a = Advisor(name=name, email=email, work_phone_number=work_phone_number, mobile_phone_number=mobile_phone_number, hotel_room_number= hotel_room_number, school=school).save()
+        return HttpResponseRedirect('/')
+@login_required()
+def advisor_delete(request, advisor):
+    Advisor.objects.get(pk=advisor).delete()
+    return HttpResponseRedirect('/')
+
+@login_required()
+def add_delegate(request):
+    if request.method != 'POST':
+        return HttpResponseRedirect('/')
+
+    name = request.POST['name']
+    position = request.POST['position']
+    committee = request.POST['committee']
+    hotel_room_number = request.POST['hotel_room_number']
+    school = School.objects.get(user_account=request.user)
+
+    if len(name) < 1 or len(position) < 1 or len(committee) < 1 or len(hotel_room_number) < 1:
+        return HttpResponseRedirect('/')
+    else:
+        d = Delegate(name=name, position=position, committee=committee, hotel_room_number=hotel_room_number, school=school).save()
+        return HttpResponseRedirect('/')
+
+
+
+
+@login_required()
+def delegate_delete(request, delegate):
+    Delegate.objects.get(pk=delegate).delete()
+
+    return HttpResponseRedirect('/')
+
+
+
 
 @login_required()
 def main(request):
