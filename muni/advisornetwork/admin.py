@@ -24,6 +24,7 @@ class SchoolAdmin(admin.ModelAdmin):
         'paid_delegate_fees', 'transportation_required',
         'interested_crisis_committees',
         'interested_ipd_positions',
+        'delegate_count_estimate',
         'marked_paid_at',
         'created_at',
         'updated_at',
