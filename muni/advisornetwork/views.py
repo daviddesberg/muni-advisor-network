@@ -58,12 +58,17 @@ def add_advisor(request):
     if len(name) < 1 or len(email) < 1 or len(work_phone_number) < 1 or len(mobile_phone_number) < 1 or len(hotel_room_number) < 1:
         return HttpResponseRedirect('/')
     else:
-        a = Advisor(name=name, email=email, work_phone_number=work_phone_number, mobile_phone_number=mobile_phone_number, hotel_room_number= hotel_room_number, school=school).save()
+        a = Advisor(name=name, email=email, work_phone_number=work_phone_number,
+                    mobile_phone_number=mobile_phone_number,
+                    hotel_room_number= hotel_room_number, school=school).save()
         return HttpResponseRedirect('/')
+
+
 @login_required()
 def advisor_delete(request, advisor):
     Advisor.objects.get(pk=advisor).delete()
     return HttpResponseRedirect('/')
+
 
 @login_required()
 def add_delegate(request):
@@ -79,10 +84,9 @@ def add_delegate(request):
     if len(name) < 1 or len(position) < 1 or len(committee) < 1 or len(hotel_room_number) < 1:
         return HttpResponseRedirect('/')
     else:
-        d = Delegate(name=name, position=position, committee=committee, hotel_room_number=hotel_room_number, school=school).save()
+        d = Delegate(name=name, position=position, committee=committee, hotel_room_number=hotel_room_number,
+                     school=school).save()
         return HttpResponseRedirect('/')
-
-
 
 
 @login_required()
@@ -90,8 +94,6 @@ def delegate_delete(request, delegate):
     Delegate.objects.get(pk=delegate).delete()
 
     return HttpResponseRedirect('/')
-
-
 
 
 @login_required()
