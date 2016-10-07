@@ -35,7 +35,7 @@ class Delegate(models.Model):
     position = models.CharField(max_length=500, blank=True)
     committee = models.CharField(max_length=500, blank=True)
     hotel_room_number = models.CharField(max_length=500, blank=True)
-    school = models.ForeignKey(School)
+    school = models.ForeignKey(School, related_name="delegates")
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -50,7 +50,7 @@ class Advisor(models.Model):
     work_phone_number = PhoneNumberField(blank=True)
     mobile_phone_number = PhoneNumberField()
     hotel_room_number = models.CharField(max_length=20, blank=True)
-    school = models.ForeignKey(School)
+    school = models.ForeignKey(School, related_name="advisors")
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
