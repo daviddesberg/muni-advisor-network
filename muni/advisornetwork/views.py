@@ -6,6 +6,7 @@ from .forms import RegistrationForm
 from .models import School, Advisor, Delegate
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from .alert import build_alert, do_alert
 
 
 def home(request):
@@ -22,6 +23,8 @@ def mark_school_paid(request):
     school.marked_paid_at = timezone.now()
     school.save()
 
+    do_alert("marked school fee paid", school, request)
+
     return HttpResponseRedirect('/')
 
 
@@ -31,6 +34,8 @@ def mark_delegate_paid(request):
     school.marked_paid_delegate_fee = timezone.now()
     school.save()
 
+    do_alert("marked delegate fee paid", school, request)
+
     return HttpResponseRedirect('/')
 
 
@@ -39,6 +44,8 @@ def mark_transit_paid(request):
     school = School.objects.get(user_account=request.user)
     school.marked_paid_transit_fee = timezone.now()
     school.save()
+
+    do_alert("marked transit fee paid", school, request)
 
     return HttpResponseRedirect('/')
 
@@ -60,13 +67,20 @@ def add_advisor(request):
     else:
         a = Advisor(name=name, email=email, work_phone_number=work_phone_number,
                     mobile_phone_number=mobile_phone_number,
-                    hotel_room_number= hotel_room_number, school=school).save()
+                    hotel_room_number=hotel_room_number, school=school)
+
+        a.save()
+        do_alert("added advisor", a, request)
         return HttpResponseRedirect('/')
 
 
 @login_required()
 def advisor_delete(request, advisor):
-    Advisor.objects.get(pk=advisor).delete()
+    a = Advisor.objects.get(pk=advisor)
+    alert = build_alert("deleted advisor", a, request)
+    a.delete()
+    do_alert(alert)
+
     return HttpResponseRedirect('/')
 
 
@@ -85,13 +99,19 @@ def add_delegate(request):
         return HttpResponseRedirect('/')
     else:
         d = Delegate(name=name, position=position, committee=committee, hotel_room_number=hotel_room_number,
-                     school=school).save()
+                     school=school)
+        d.save()
+
+        do_alert("added delegate", d, request)
         return HttpResponseRedirect('/')
 
 
 @login_required()
 def delegate_delete(request, delegate):
+    d = Delegate.objects.get(pk=delegate)
+    alert = build_alert("deleted delegate", d, request)
     Delegate.objects.get(pk=delegate).delete()
+    do_alert(alert)
 
     return HttpResponseRedirect('/')
 
@@ -107,7 +127,6 @@ def main(request):
         advisors = None
         delegates = None
 
-    print(advisors)
     return render(request, 'main.html', {
         'school': school,
         'advisors': advisors,

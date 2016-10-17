@@ -20,5 +20,6 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^$', main, name='home'),
     url(r'^admin/', admin.site.urls),
+    url(r'^admin/', include('loginas.urls')),
     url(r'^', include('advisornetwork.urls')),
 ]
