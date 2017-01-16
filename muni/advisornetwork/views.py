@@ -130,7 +130,7 @@ def main(request):
     return render(request, 'main.html', {
         'school': school,
         'advisors': advisors,
-        'delegates' : delegates
+        'delegates': delegates
     })
 
 

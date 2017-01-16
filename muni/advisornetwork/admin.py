@@ -18,13 +18,23 @@ class AdvisorInline(admin.TabularInline):
     model = Advisor
 
 
+class DelegateInline(admin.TabularInline):
+    model = Delegate
+
+
 class SchoolAdmin(admin.ModelAdmin):
+    def actual_delegate_count(self, school):
+        return school.delegates.count()
+
+    actual_delegate_count.short_description = "Actual Delegate Count"
+
     list_display = [
         'name', 'paid_school_fee',
         'paid_delegate_fees', 'transportation_required',
         'interested_crisis_committees',
         'interested_ipd_positions',
         'delegate_count_estimate',
+        'actual_delegate_count',
         'marked_paid_at',
         'created_at',
         'updated_at',
@@ -32,7 +42,8 @@ class SchoolAdmin(admin.ModelAdmin):
     ]
 
     inlines = [
-        AdvisorInline
+        AdvisorInline,
+        DelegateInline
     ]
 
 
