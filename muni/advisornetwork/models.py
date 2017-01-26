@@ -57,3 +57,10 @@ class Advisor(models.Model):
 
     def __str__(self):
         return "%s (School %s)" % (self.name, str(self.school))
+
+
+class PositionPaper(models.Model):
+    delegate = models.ForeignKey(Delegate, related_name="position papers")
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
