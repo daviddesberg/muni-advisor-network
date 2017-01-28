@@ -31,6 +31,8 @@ urlpatterns = [
     url(r'addadvisor', views.add_advisor, name='add_advisor'),
 
     # /adddelegate
-    url(r'adddelegate', views.add_delegate, name='add_delegate')
+    url(r'adddelegate', views.add_delegate, name='add_delegate'),
 
+    # /positionpapers
+    url(r'positionpapers', views.position_papers, name='position_papers')
 ]

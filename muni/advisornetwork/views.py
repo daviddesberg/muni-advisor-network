@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 from .forms import RegistrationForm, PositionPaperForm
-from .models import School, Advisor, Delegate
+from .models import School, Advisor, Delegate, PositionPaper
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from .alert import build_alert, do_alert
@@ -203,6 +203,11 @@ def main(request):
         'delegates': delegates,
         'pos_paper_form': pos_paper_form
     })
+
+
+def position_papers(request):
+    PositionPaper.all()
+    return render(request, 'positionpapers.html')
 
 
 def register(request):
