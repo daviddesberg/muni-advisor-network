@@ -2,10 +2,8 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
+MEDIA_ROOT = 'files/'
+MEDIA_URL = '/files/'
 
 SECRET_KEY = 'o13!18#*t7eu6yi@w=5lwj*$699t&95k1ut_agzxy)*t%9q=t9'
 

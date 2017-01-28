@@ -1,6 +1,7 @@
 from django import forms
 from phonenumber_field.formfields import PhoneNumberField
 from phonenumber_field.widgets import PhoneNumberInternationalFallbackWidget
+from .models import Delegate, PositionPaper
 
 
 class RegistrationForm(forms.Form):
@@ -50,3 +51,15 @@ class RegistrationForm(forms.Form):
     country_pref_3 = forms.CharField(label="Insert Country Name", required=False)
 
     additional_notes = forms.CharField(widget=forms.Textarea(attrs={'style': 'height:80px;'}), required=False)
+
+
+class PositionPaperForm(forms.ModelForm):
+    class Meta:
+        model = PositionPaper
+        fields = ['delegate', 'paper']
+
+    def __init__(self, *args, **kwargs):
+        school = kwargs.pop('school', None)
+        super(PositionPaperForm, self).__init__(*args, **kwargs)
+        self.fields['delegate'].queryset = Delegate.objects.filter(school=school)
+

@@ -36,6 +36,8 @@
                         <th>Phone Number (Work)</th>
                         <th>Phone Number (Mobile)</th>
                         <th>Hotel Room Number</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
                     </thead>
                     <tbody>
                     {% for advisor in advisors %}
@@ -45,8 +47,11 @@
                         <td> {{ advisor.work_phone_number }}</td>
                         <td> {{ advisor.mobile_phone_number }}</td>
                         <td> {{ advisor.hotel_room_number }}</td>
-                        {% if advisors.count > 1 %}
+                        <td><a href="/advisor/{{advisor.pk}}/edit"><i class="fa fa-cog"</a></td>
+                        {% if forloop.counter0 > 0 %}
                         <td><a href="/advisor/{{ advisor.pk }}/delete"><i class="fa fa-times-circle"></i></a></td>
+                        {% else %}
+                        <td>N/A</td>
                         {% endif %}
                     </tr>
                     {% endfor %}
@@ -58,7 +63,7 @@
                             <td><input name="work_phone_number" class="form-control" id="advisorWorkPhone" placeholder="Work Phone No."></td>
                             <td><input name="mobile_phone_number" class="form-control" id="advisorMobilePhone" placeholder="Mobile No."></td>
                             <td><input name="hotel_room_number" class="form-control" id="advisorHotelRoom"  placeholder="Hotel Room No."></td>
-                            <td><button type="submit" class="btn btn-success">Add</button></td>
+                            <td colspan="2"><button type="submit" class="btn btn-success">Add</button></td>
                         </form>
                     </tr>
 
@@ -72,6 +77,8 @@
                         <th>Position</th>
                         <th>Committee</th>
                         <th>Hotel Room Number</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
                     </thead>
                     {% for delegate in delegates %}
                     <tbody>
@@ -80,6 +87,7 @@
                         <td> {{ delegate.position }}</td>
                         <td> {{ delegate.committee }}</td>
                         <td> {{ delegate.hotel_room_number }}</td>
+                        <td><a href="/delegate/{{ delegate.pk }}/edit"><i class="fa fa-cog"></i></a></td>
                         <td><a href="/delegate/{{ delegate.pk }}/delete"><i class="fa fa-times-circle"></i></a></td>
                     </tr>
                     {% endfor %}
@@ -90,13 +98,13 @@
                             <td><input name="position" class="form-control" id="delegatePosition" placeholder="Position"></td>
                             <td><input name="committee" class="form-control" id="delegateCommittee" placeholder="Committee"></td>
                             <td><input name="hotel_room_number" class="form-control" id="delegateHotelRoom"  placeholder="Hotel Room No."></td>
-                            <td><button type="submit" class="btn btn-success">Add</button></td>
+                            <td colspan="2"><button type="submit" class="btn btn-success">Add</button></td>
                         </form>
                     </tr>
                     </tbody>
                 </table>
 
-                Below, you may update the current status of your payments. <br><br>
+                <h4>Below, you may update the current status of your payments.</h4>
 
                 {% if school.marked_paid_at == null %}
                 <a href="/mark-school-paid">Mark school fee as paid</a><br>
@@ -121,7 +129,13 @@
 
 
                 <br>
-
+                <h4>Below, you may upload your delegates' position papers.</h4>
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% bootstrap_form pos_paper_form %}
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                </form>
+                <hr>
                 <a href="/logout?next=/" title="Logout">Click here to logout</a>
             </div>
         </div>

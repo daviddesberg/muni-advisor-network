@@ -18,8 +18,14 @@ urlpatterns = [
     # /advisor/{id}/delete
     url(r'advisor/(?P<advisor>[0-9]+)/delete', views.advisor_delete, name='advisor_delete'),
 
+    # /advisor/{id}/edit
+    url(r'advisor/(?P<advisor>[0-9]+)/edit', views.advisor_edit, name='advisor_edit'),
+
     # /delegate/{id}/delete
     url(r'delegate/(?P<delegate>[0-9]+)/delete', views.delegate_delete, name='delegate_delete'),
+
+    # /delegate/{id}/edit
+    url(r'delegate/(?P<delegate>[0-9]+)/edit', views.delegate_edit, name='delegate_delete'),
 
     # /addadvisor
     url(r'addadvisor', views.add_advisor, name='add_advisor'),

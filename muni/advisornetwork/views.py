@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
-from .forms import RegistrationForm
+from .forms import RegistrationForm, PositionPaperForm
 from .models import School, Advisor, Delegate
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
@@ -77,6 +77,8 @@ def add_advisor(request):
 @login_required()
 def advisor_delete(request, advisor):
     a = Advisor.objects.get(pk=advisor)
+    if a.school != School.objects.get(user_account=request.user):
+        return HttpResponseRedirect('/')
     alert = build_alert("deleted advisor", a, request)
     a.delete()
     do_alert(alert)
@@ -109,11 +111,71 @@ def add_delegate(request):
 @login_required()
 def delegate_delete(request, delegate):
     d = Delegate.objects.get(pk=delegate)
+    if d.school != School.objects.get(user_account=request.user):
+        return HttpResponseRedirect('/')
+
     alert = build_alert("deleted delegate", d, request)
     Delegate.objects.get(pk=delegate).delete()
     do_alert(alert)
 
     return HttpResponseRedirect('/')
+
+
+@login_required()
+def delegate_edit(request, delegate):
+    d = Delegate.objects.get(pk=delegate)
+    if d.school != School.objects.get(user_account=request.user):
+        return HttpResponseRedirect('/')
+
+    if request.method == 'POST':
+        name = request.POST['name']
+        position = request.POST['position']
+        committee = request.POST['committee']
+        hotel_room_number = request.POST['hotel_room_number']
+        if len(name) < 1 or len(position) < 1 or len(committee) < 1:
+            return HttpResponseRedirect('/')
+        d.name = name
+        d.position = position
+        d.committee = committee
+        d.hotel_room_number = hotel_room_number
+        d.save()
+        return HttpResponseRedirect('/')
+
+    return render(request, 'editpage.html', {
+        'obj': d,
+        'edit_type': 'delegate'
+    })
+
+
+@login_required()
+def advisor_edit(request, advisor):
+    a = Advisor.objects.get(pk=advisor)
+    if a.school != School.objects.get(user_account=request.user):
+        return HttpResponseRedirect('/')
+
+    if request.method == 'POST':
+        name = request.POST['name']
+        email = request.POST['email']
+        work_phone_number = request.POST['work_phone_number']
+        mobile_phone_number = request.POST['mobile_phone_number']
+        hotel_room_number = request.POST['hotel_room_number']
+
+        if len(name) < 1 or len(email) < 1 or len(work_phone_number) < 1 or len(mobile_phone_number) < 1:
+            return HttpResponseRedirect('/')
+
+        a.name = name
+        a.email = email
+        a.work_phone_number = work_phone_number
+        a.mobile_phone_number = mobile_phone_number
+        a.hotel_room_number = hotel_room_number
+        a.save()
+
+        return HttpResponseRedirect('/')
+
+    return render(request, 'editpage.html', {
+        'obj': a,
+        'edit_type': 'advisor'
+    })
 
 
 @login_required()
@@ -127,10 +189,19 @@ def main(request):
         advisors = None
         delegates = None
 
+    if request.method == 'POST':
+        pos_paper_form = PositionPaperForm(request.POST, request.FILES, school=school)
+        if pos_paper_form.is_valid():
+            paper = pos_paper_form.save()
+            return HttpResponseRedirect('/')
+
+    pos_paper_form = PositionPaperForm(school=school)
+
     return render(request, 'main.html', {
         'school': school,
         'advisors': advisors,
-        'delegates': delegates
+        'delegates': delegates,
+        'pos_paper_form': pos_paper_form
     })
 
 

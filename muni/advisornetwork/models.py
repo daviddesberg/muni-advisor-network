@@ -59,8 +59,12 @@ class Advisor(models.Model):
         return "%s (School %s)" % (self.name, str(self.school))
 
 
-class PositionPaper(models.Model):
-    delegate = models.ForeignKey(Delegate, related_name="position papers")
+def pos_paper_path(instance, filename):
+    return 'school_%s/delegate_%s/%s' % (str(instance.delegate.school.id), str(instance.delegate.id), filename)
 
+
+class PositionPaper(models.Model):
+    delegate = models.ForeignKey(Delegate, related_name="position_papers")
+    paper = models.FileField(upload_to=pos_paper_path)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
