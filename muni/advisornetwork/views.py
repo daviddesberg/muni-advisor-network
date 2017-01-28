@@ -7,6 +7,7 @@ from .models import School, Advisor, Delegate, PositionPaper
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from .alert import build_alert, do_alert
+from collections import defaultdict
 
 
 def home(request):
@@ -193,6 +194,7 @@ def main(request):
         pos_paper_form = PositionPaperForm(request.POST, request.FILES, school=school)
         if pos_paper_form.is_valid():
             paper = pos_paper_form.save()
+            do_alert("uploaded position paper for %s" % (paper.delegate.name), school, request)
             return HttpResponseRedirect('/')
 
     pos_paper_form = PositionPaperForm(school=school)
@@ -206,8 +208,29 @@ def main(request):
 
 
 def position_papers(request):
-    PositionPaper.all()
-    return render(request, 'positionpapers.html')
+    papers = PositionPaper.objects.all()
+    committee_list = sorted([
+        'UNSC 2017: The World at Crossroads',
+        'DISEC',
+        'ECOFIN',
+        'ECOSOC',
+        'Illinois General Assembly',
+        'UNHRC',
+        'WHO'
+    ])
+
+    by_cmt = defaultdict(lambda: [])
+    for cmt in committee_list:
+        by_cmt[cmt] = []
+
+    for paper in papers:
+        by_cmt[paper.delegate.committee].append(paper)
+
+    print(by_cmt.items())
+    return render(request, 'positionpapers.html', {
+        'papers': list(by_cmt.items()),
+        'cmt': committee_list
+    })
 
 
 def register(request):

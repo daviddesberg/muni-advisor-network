@@ -16,6 +16,46 @@
                 <h1>Position Papers</h1>
             </div>
         </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <label for="cmtselect">To view position papers, please select a committee:</label>
+                <select id="cmtselect">
+                    <option value="-">Select a committee...</option>
+                    {% for k in cmt %}
+                    <option value="{{k}}">{{k}}</option>
+                    {%endfor%}
+                </select>
+                <hr>
+                {% for committee, sub in papers %}
+                <table style="display: none;" class="papertable table table-bordered" data-cmt="{{ committee }}">
+                    <tr>
+                        <th>School</th>
+                        <th>Delegate</th>
+                        <th>Position</th>
+                        <th>Position Paper</th>
+                    </tr>
+                    {% for paper in sub %}
+                    <tr>
+                        <td>{{ paper.delegate.school.name }}</td>
+                        <td>{{ paper.delegate.name }}</td>
+                        <td>{{ paper.delegate.position }}</td>
+                        <td><a target="_blank" href="{{ paper.paper.url }}">Click Here</a></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 </section>
+{% endblock %}
+{% block addl_footer %}
+<script type="text/javascript">
+    $(function() {
+        $("#cmtselect").change(function() {
+            $(".papertable").hide();
+            $(".papertable[data-cmt='" + $(this).val() + "']").show();
+        });
+    });
+</script>
 {% endblock %}
