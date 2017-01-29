@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 from .forms import RegistrationForm, PositionPaperForm
@@ -9,6 +9,8 @@ from django.utils import timezone
 from .alert import build_alert, do_alert
 from collections import defaultdict
 from .conference_data import committee_list, position_paper_committees
+from django.contrib import messages
+
 
 def home(request):
     return render(request, 'home.html')
@@ -25,7 +27,7 @@ def mark_school_paid(request):
     school.save()
 
     do_alert("marked school fee paid", school, request)
-
+    messages.add_message(request, messages.INFO, 'School fee marked as paid.')
     return HttpResponseRedirect('/')
 
 
@@ -36,7 +38,7 @@ def mark_delegate_paid(request):
     school.save()
 
     do_alert("marked delegate fee paid", school, request)
-
+    messages.add_message(request, messages.INFO, 'Delegates fee marked as paid.')
     return HttpResponseRedirect('/')
 
 
@@ -47,7 +49,7 @@ def mark_transit_paid(request):
     school.save()
 
     do_alert("marked transit fee paid", school, request)
-
+    messages.add_message(request, messages.INFO, 'Transit fee marked as paid.')
     return HttpResponseRedirect('/')
 
 
@@ -64,6 +66,7 @@ def add_advisor(request):
     school = School.objects.get(user_account=request.user)
 
     if len(name) < 1 or len(email) < 1 or len(work_phone_number) < 1 or len(mobile_phone_number) < 1:
+        messages.add_message(request, messages.ERROR, "Please fill out all required fields to add an advisor.")
         return HttpResponseRedirect('/')
     else:
         a = Advisor(name=name, email=email, work_phone_number=work_phone_number,
@@ -72,6 +75,7 @@ def add_advisor(request):
 
         a.save()
         do_alert("added advisor", a, request)
+        messages.add_message(request, messages.INFO, 'Advisor successfully added.')
         return HttpResponseRedirect('/')
 
 
@@ -83,7 +87,7 @@ def advisor_delete(request, advisor):
     alert = build_alert("deleted advisor", a, request)
     a.delete()
     do_alert(alert)
-
+    messages.add_message(request, messages.INFO, 'Advisor successfully deleted.')
     return HttpResponseRedirect('/')
 
 
@@ -99,6 +103,7 @@ def add_delegate(request):
     school = School.objects.get(user_account=request.user)
 
     if len(name) < 1 or len(position) < 1 or len(committee) < 1:
+        messages.add_message(request, messages.ERROR, "Please fill out all required fields to add a delegate.")
         return HttpResponseRedirect('/')
     else:
         d = Delegate(name=name, position=position, committee=committee, hotel_room_number=hotel_room_number,
@@ -106,6 +111,7 @@ def add_delegate(request):
         d.save()
 
         do_alert("added delegate", d, request)
+        messages.add_message(request, messages.INFO, 'Delegate successfully added.')
         return HttpResponseRedirect('/')
 
 
@@ -118,7 +124,7 @@ def delegate_delete(request, delegate):
     alert = build_alert("deleted delegate", d, request)
     Delegate.objects.get(pk=delegate).delete()
     do_alert(alert)
-
+    messages.add_message(request, messages.INFO, 'Delegate successfully deleted.')
     return HttpResponseRedirect('/')
 
 
@@ -134,12 +140,15 @@ def delegate_edit(request, delegate):
         committee = request.POST['committee']
         hotel_room_number = request.POST['hotel_room_number']
         if len(name) < 1 or len(position) < 1 or len(committee) < 1:
+            messages.add_message(request, messages.ERROR, "Please fill out all required fields to edit a delegate.")
             return HttpResponseRedirect('/')
         d.name = name
         d.position = position
         d.committee = committee
         d.hotel_room_number = hotel_room_number
         d.save()
+        messages.add_message(request, messages.INFO, 'Delegate successfully edited.')
+
         return HttpResponseRedirect('/')
 
     return render(request, 'editpage.html', {
@@ -163,6 +172,7 @@ def advisor_edit(request, advisor):
         hotel_room_number = request.POST['hotel_room_number']
 
         if len(name) < 1 or len(email) < 1 or len(work_phone_number) < 1 or len(mobile_phone_number) < 1:
+            messages.add_message(request, messages.ERROR, "Please fill out all required fields to edit an advisor.")
             return HttpResponseRedirect('/')
 
         a.name = name
@@ -171,6 +181,8 @@ def advisor_edit(request, advisor):
         a.mobile_phone_number = mobile_phone_number
         a.hotel_room_number = hotel_room_number
         a.save()
+
+        messages.add_message(request, messages.INFO, 'Advisor successfully edited.')
 
         return HttpResponseRedirect('/')
 
@@ -191,13 +203,15 @@ def main(request):
         advisors = None
         delegates = None
 
-    for advisor in advisors:
-        print(type(advisor.work_phone_number))
     if request.method == 'POST':
         pos_paper_form = PositionPaperForm(request.POST, request.FILES, school=school)
         if pos_paper_form.is_valid():
             paper = pos_paper_form.save()
             do_alert("uploaded position paper for %s" % (paper.delegate.name), school, request)
+            messages.add_message(request, messages.INFO, 'Position paper added.')
+            return HttpResponseRedirect('/')
+        else:
+            messages.add_message(request, messages.ERROR, 'Please select a delegate and upload a PDF or Word document.')
             return HttpResponseRedirect('/')
 
     pos_paper_form = PositionPaperForm(school=school)
@@ -212,7 +226,17 @@ def main(request):
 
 
 def position_papers(request):
-    papers = PositionPaper.objects.all()
+    # use the latest for each delegate, so uploads can replace older ones
+    temp = PositionPaper.objects.all()
+    papers = []
+    by_delegate = defaultdict(lambda: [])
+    for paper in temp:
+        by_delegate[paper.delegate].append(paper)
+
+    for per_delegate in by_delegate.values():
+        per_delegate = sorted(per_delegate, key=lambda p: p.updated_at, reverse=True)
+        papers.append(per_delegate[0])
+
     by_cmt = defaultdict(lambda: [])
     for cmt in position_paper_committees:
         by_cmt[cmt] = []
@@ -220,7 +244,6 @@ def position_papers(request):
     for paper in papers:
         by_cmt[paper.delegate.committee].append(paper)
 
-    print(by_cmt.items())
     return render(request, 'positionpapers.html', {
         'papers': list(by_cmt.items()),
         'cmt': position_paper_committees

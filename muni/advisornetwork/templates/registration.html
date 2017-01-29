@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 
-{% block content %}
+
 {% load bootstrap3 %}
+{% block header %}
 <header class="imageheader registrationheader">
     <div class="header-content">
         <div class="header-content-inner">
@@ -9,6 +10,9 @@
         </div>
     </div>
 </header>
+{% endblock %}
+
+{% block content %}
 <style>
     #reg-table td[colspan^="3"] {
         text-align: center;
@@ -19,6 +23,8 @@
         font-style: italic;
     }
 </style>
+
+
 <section>
     <div class="container">
         <div class="row">

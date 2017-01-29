@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load bootstrap3 %}
 
-{% block content %}
+{% block header %}
 <header class="imageheader registrationheader">
     <div class="header-content">
         <div class="header-content-inner">
@@ -9,7 +9,8 @@
         </div>
     </div>
 </header>
-
+{% endblock %}
+{% block content %}
 <section>
     <div class="container">
         <div class="row">
@@ -137,6 +138,7 @@
 
                 <br>
                 <h4>Below, you may upload your delegates' position papers.</h4>
+                <p>Please upload one file per delegate. Provide either a PDF or a Word (.doc or .docx) file.</p>
                 <form action="" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     {% bootstrap_form pos_paper_form %}

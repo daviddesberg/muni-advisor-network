@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
+from .validators import validate_pos_paper_extension
+import os
 
 
 class School(models.Model):
@@ -60,12 +62,14 @@ class Advisor(models.Model):
 
 
 def pos_paper_path(instance, filename):
+    ext = os.path.splitext(filename)[1]
+    filename = "pospaper_" + str(instance.delegate.id) + ext
     return 'school_%s/delegate_%s/%s' % (str(instance.delegate.school.id), str(instance.delegate.id), filename)
 
 
 class PositionPaper(models.Model):
     delegate = models.ForeignKey(Delegate, related_name="position_papers")
-    paper = models.FileField(upload_to=pos_paper_path)
+    paper = models.FileField(upload_to=pos_paper_path, validators=[validate_pos_paper_extension])
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load bootstrap3 %}
 
-{% block content %}
+{% block header %}
 <header class="imageheader registrationheader">
     <div class="header-content">
         <div class="header-content-inner">
@@ -9,12 +9,35 @@
         </div>
     </div>
 </header>
+{% endblock %}
 
+{% block content %}
 <section>
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <h1>Advisor Network &mdash; Login</h1>
+                <p>
+                    Welcome to the MUNI Advisor Network system.
+                    Log-in below with the sign-in information you received upon registering.
+                    If you need to recover this information, email John Hall, Under Secretary General of Registration at <script>document.write('<'+'a'+' '+'h'+'r'+'e'+'f'+'='+"'"+'m'+'a'+'&'+'#'+'1'+'0'+'5'+';'+'l'+'t'+'&'+'#'+'1'+'1'+'1'+';'+
+                    '&'+'#'+'5'+'8'+';'+'%'+'&'+'#'+'5'+'5'+';'+'2'+'e'+'g'+'&'+'#'+'1'+'0'+'5'+';'+'&'+'#'+'1'+'1'+'5'+
+                    ';'+'t'+'r'+'a'+'&'+'#'+'1'+'1'+'6'+';'+'i'+'&'+'#'+'1'+'1'+'1'+';'+'n'+'&'+'#'+'6'+'4'+';'+'%'+'6'+
+                    '9'+'&'+'#'+'3'+'7'+';'+'6'+'C'+'&'+'#'+'3'+'7'+';'+'6'+'C'+'&'+'#'+'1'+'0'+'5'+';'+'&'+'#'+'1'+'1'+
+                    '0'+';'+'o'+'&'+'#'+'1'+'0'+'5'+';'+'s'+'&'+'#'+'1'+'0'+'9'+';'+'u'+'n'+'&'+'#'+'4'+'6'+';'+'%'+'6'+
+                    '&'+'#'+'7'+'0'+';'+'r'+'%'+'&'+'#'+'5'+'4'+';'+'7'+"'"+'>'+'&'+'#'+'1'+'1'+'4'+';'+'e'+'g'+'&'+'#'+
+                    '1'+'0'+'5'+';'+'&'+'#'+'1'+'1'+'5'+';'+'t'+'r'+'a'+'t'+'&'+'#'+'1'+'0'+'5'+';'+'&'+'#'+'1'+'1'+'1'+
+                    ';'+'&'+'#'+'1'+'1'+'0'+';'+'&'+'#'+'6'+'4'+';'+'&'+'#'+'1'+'0'+'5'+';'+'l'+'l'+'&'+'#'+'1'+'0'+'5'+
+                    ';'+'&'+'#'+'1'+'1'+'0'+';'+'&'+'#'+'1'+'1'+'1'+';'+'i'+'s'+'m'+'u'+'n'+'&'+'#'+'4'+'6'+';'+'&'+'#'+
+                    '1'+'1'+'1'+';'+'&'+'#'+'1'+'1'+'4'+';'+'g'+'<'+'/'+'a'+'>');</script><noscript>[Turn on JavaScript to see the email address]</noscript>.
+                    Please note, to look up your sign-in credential in your email inbox, be sure to search for past emails from <script>document.write('<'+'a'+' '+'h'+'r'+'e'+'f'+'='+"'"+'m'+'a'+'&'+'#'+'1'+'0'+'5'+';'+'&'+'#'+'1'+'0'+'8'+';'+'&'+'#'+
+                '1'+'1'+'6'+';'+'&'+'#'+'1'+'1'+'1'+';'+'&'+'#'+'5'+'8'+';'+'&'+'#'+'1'+'1'+'6'+';'+'e'+'c'+'h'+'&'+
+                '#'+'6'+'4'+';'+'i'+'l'+'%'+'&'+'#'+'5'+'4'+';'+'C'+'i'+'n'+'o'+'&'+'#'+'3'+'7'+';'+'6'+'9'+'%'+'7'+
+                '3'+'m'+'u'+'%'+'6'+'E'+'&'+'#'+'4'+'6'+';'+'o'+'r'+'g'+"'"+'>'+'&'+'#'+'1'+'1'+'6'+';'+'&'+'#'+'1'+
+                '0'+'1'+';'+'c'+'h'+'&'+'#'+'6'+'4'+';'+'&'+'#'+'1'+'0'+'5'+';'+'l'+'&'+'#'+'1'+'0'+'8'+';'+'i'+'n'+
+                'o'+'i'+'s'+'m'+'&'+'#'+'1'+'1'+'7'+';'+'n'+'&'+'#'+'4'+'6'+';'+'&'+'#'+'1'+'1'+'1'+';'+'r'+'g'+'<'+
+                '/'+'a'+'>');</script><noscript>[Turn on JavaScript to see the email address]</noscript> as the email containing this information as part of your registration confirmation was automatically generated from this address.
+                </p>
                 <form method="post" action="{% url 'login' %}">
                     {% csrf_token %}
                     {% bootstrap_form form %}
