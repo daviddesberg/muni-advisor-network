@@ -41,7 +41,7 @@ class Delegate(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return "%s (School %s)" % (self.name, str(self.school))
+        return "%s (School: %s)" % (self.name, str(self.school))
 
 
 class Advisor(models.Model):
@@ -56,7 +56,7 @@ class Advisor(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return "%s (School %s)" % (self.name, str(self.school))
+        return "%s (School: %s)" % (self.name, str(self.school))
 
 
 def pos_paper_path(instance, filename):
@@ -68,3 +68,6 @@ class PositionPaper(models.Model):
     paper = models.FileField(upload_to=pos_paper_path)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return "Position paper submitted by %s" % str(self.delegate.name)

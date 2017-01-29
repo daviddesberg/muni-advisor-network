@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Advisor, Delegate, School
+from .models import Advisor, Delegate, School, PositionPaper
 
 
 class AdvisorAdmin(admin.ModelAdmin):
@@ -51,9 +51,19 @@ class DelegateAdmin(admin.ModelAdmin):
     pass
 
 
+class PositionPaperAdmin(admin.ModelAdmin):
+    list_display = [
+        'delegate',
+        'created_at',
+        'updated_at'
+    ]
+    pass
+
+
 admin.site.register(School, SchoolAdmin)
 admin.site.register(Advisor, AdvisorAdmin)
 admin.site.register(Delegate, DelegateAdmin)
+admin.site.register(PositionPaper, PositionPaperAdmin)
 
 admin.site.site_title = 'MUNI Advisor Network'
 admin.site.site_header = 'MUNI Advisor Network'
