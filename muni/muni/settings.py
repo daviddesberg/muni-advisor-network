@@ -2,7 +2,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-MEDIA_ROOT = 'files/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'files/')
 MEDIA_URL = '/files/'
 
 SECRET_KEY = 'o13!18#*t7eu6yi@w=5lwj*$699t&95k1ut_agzxy)*t%9q=t9'
