@@ -29,21 +29,9 @@
                         <label for="committee">Committee</label>
                         <select name="committee" class="form-control" id="committee">
                             <option value="">Select a committee</option>
-                            <option value="adhoc">Ad-Hoc</option>
-                            <option value="Kingdom of Heaven: The Court of Baldwin IV of Jerusalem">Kingdom of Heaven: The Court of Baldwin IV of Jerusalem</option>
-                            <option value="Responsibility to Protect: Coalition Forces (JCC)">Responsibility to Protect: Coalition Forces (JCC)</option>
-                            <option value="Destiny Awaits: Iraqi Government (JCC)">Destiny Awaits: Iraqi Government (JCC)</option>
-                            <option value="The Next Great City: The FIFA Executive Board Committee">The Next Great City: The FIFA Executive Board Committee</option>
-                            <option value="Independence: Nehru's Cabinet of 1947">Independence: Nehru's Cabinet of 1947</option>
-                            <option value="Island of Mystery: The Roanoke Colony">Island of Mystery: The Roanoke Colony</option>
-                            <option value="UNSC 2017: The World at Crossroads">UNSC 2017: The World at Crossroads</option>
-                            <option value="1917 Duma">1917 Duma</option>
-                            <option value="DISEC">DISEC</option>
-                            <option value="ECOFIN">ECOFIN</option>
-                            <option value="ECOSOC">ECOSOC</option>
-                            <option value="Illinois General Assembly">Illinois General Assembly</option>
-                            <option value="UNHRC">UNHRC</option>
-                            <option value="WHO">WHO</option>
+                            {% for c in committee_list %}
+                                <option value="{{c}}" {% if obj.committee == c %}selected{% endif %}>{{c}}</option>
+                            {% endfor %}
                         </select>
                     </div>
                     <div class="form-group">

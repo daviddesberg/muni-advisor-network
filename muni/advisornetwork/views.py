@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from .alert import build_alert, do_alert
 from collections import defaultdict
-
+from .conference_data import committee_list, position_paper_committees
 
 def home(request):
     return render(request, 'home.html')
@@ -144,7 +144,8 @@ def delegate_edit(request, delegate):
 
     return render(request, 'editpage.html', {
         'obj': d,
-        'edit_type': 'delegate'
+        'edit_type': 'delegate',
+        'committee_list': committee_list,
     })
 
 
@@ -190,6 +191,8 @@ def main(request):
         advisors = None
         delegates = None
 
+    for advisor in advisors:
+        print(type(advisor.work_phone_number))
     if request.method == 'POST':
         pos_paper_form = PositionPaperForm(request.POST, request.FILES, school=school)
         if pos_paper_form.is_valid():
@@ -203,24 +206,15 @@ def main(request):
         'school': school,
         'advisors': advisors,
         'delegates': delegates,
-        'pos_paper_form': pos_paper_form
+        'pos_paper_form': pos_paper_form,
+        'committee_list': committee_list
     })
 
 
 def position_papers(request):
     papers = PositionPaper.objects.all()
-    committee_list = sorted([
-        'UNSC 2017: The World at Crossroads',
-        'DISEC',
-        'ECOFIN',
-        'ECOSOC',
-        'Illinois General Assembly',
-        'UNHRC',
-        'WHO'
-    ])
-
     by_cmt = defaultdict(lambda: [])
-    for cmt in committee_list:
+    for cmt in position_paper_committees:
         by_cmt[cmt] = []
 
     for paper in papers:
@@ -229,7 +223,7 @@ def position_papers(request):
     print(by_cmt.items())
     return render(request, 'positionpapers.html', {
         'papers': list(by_cmt.items()),
-        'cmt': committee_list
+        'cmt': position_paper_committees
     })
 
 
