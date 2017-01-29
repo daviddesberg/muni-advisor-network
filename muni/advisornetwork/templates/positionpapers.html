@@ -89,7 +89,7 @@
         $("#cmtselect").change(function() {
             $(".papertable").hide();
             $(".papertable[data-cmt='" + $(this).val() + "']").show();
-        });
+        }).change();
     });
 </script>
 {% endblock %}
