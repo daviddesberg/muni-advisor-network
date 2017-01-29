@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Advisor, Delegate, School, PositionPaper
+from totalsum.admin import TotalsumAdmin
 
 
 class AdvisorAdmin(admin.ModelAdmin):
@@ -22,11 +23,12 @@ class DelegateInline(admin.TabularInline):
     model = Delegate
 
 
-class SchoolAdmin(admin.ModelAdmin):
+class SchoolAdmin(TotalsumAdmin):
     def actual_delegate_count(self, school):
         return school.delegates.count()
 
     actual_delegate_count.short_description = "Actual Delegate Count"
+    totalsum_list = ['delegate_count_estimate']
 
     list_display = [
         'name', 'paid_school_fee',
