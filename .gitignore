@@ -92,3 +92,5 @@ ENV/
 
 db.sqlite3
 muni/deploy_static
+muni/files/*
+~muni/files/.gitignore
