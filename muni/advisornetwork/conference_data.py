@@ -12,6 +12,7 @@ committee_list = [
     'ECOFIN',
     'ECOSOC',
     'Illinois General Assembly',
+    'International Press Delegation',
     'UNHRC',
     'WHO'
 ]
