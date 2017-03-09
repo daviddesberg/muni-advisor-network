@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
-from .forms import RegistrationForm, PositionPaperForm
-from .models import School, Advisor, Delegate, PositionPaper
+from .forms import RegistrationForm, PositionPaperForm, PrintDocumentForm
+from .models import School, Advisor, Delegate, PositionPaper, PrintDocument
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from .alert import build_alert, do_alert
@@ -189,6 +189,20 @@ def advisor_edit(request, advisor):
     return render(request, 'editpage.html', {
         'obj': a,
         'edit_type': 'advisor'
+    })
+
+
+def print_q_submit(request):
+    if request.method == 'POST':
+        doc_form = PrintDocumentForm(request.POST, request.FILES)
+        if doc_form.is_valid():
+            doc = doc_form.save()
+            messages.add_message(request, messages.INFO, 'Document queued for printing.')
+            return HttpResponseRedirect('/print')
+
+    doc_form = PrintDocumentForm()
+    return render(request, 'print.html', {
+        'form': doc_form
     })
 
 

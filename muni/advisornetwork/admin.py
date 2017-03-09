@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Advisor, Delegate, School, PositionPaper
+from .models import Advisor, Delegate, School, PositionPaper, PrintDocument
 from totalsum.admin import TotalsumAdmin
 
 
@@ -59,13 +59,16 @@ class PositionPaperAdmin(admin.ModelAdmin):
         'created_at',
         'updated_at'
     ]
-    pass
 
+
+class PrintDocumentAdmin(admin.ModelAdmin):
+    list_display = ['processed', 'created_at', 'committee', 'num_copies', 'comments']
 
 admin.site.register(School, SchoolAdmin)
 admin.site.register(Advisor, AdvisorAdmin)
 admin.site.register(Delegate, DelegateAdmin)
 admin.site.register(PositionPaper, PositionPaperAdmin)
+admin.site.register(PrintDocument, PrintDocumentAdmin)
 
 admin.site.site_title = 'MUNI Advisor Network'
 admin.site.site_header = 'MUNI Advisor Network'

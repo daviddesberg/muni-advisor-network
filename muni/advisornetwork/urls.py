@@ -34,5 +34,8 @@ urlpatterns = [
     url(r'adddelegate', views.add_delegate, name='add_delegate'),
 
     # /positionpapers
-    url(r'positionpapers', views.position_papers, name='position_papers')
+    url(r'positionpapers', views.position_papers, name='position_papers'),
+
+    # /print
+    url(r'print', views.print_q_submit, name='print_q_submit')
 ]

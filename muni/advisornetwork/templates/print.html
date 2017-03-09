@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+
+{% block header %}
+<header class="imageheader registrationheader">
+    <div class="header-content">
+        <div class="header-content-inner">
+            <h1 id="main-heading"><span>PRINT QUEUE</span></h1>
+        </div>
+    </div>
+</header>
+{% endblock %}
+{% block content %}
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1>MUNI Print Queue</h1>
+                <h4>Below, please upload documents which require printing.</h4>
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+                <hr>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

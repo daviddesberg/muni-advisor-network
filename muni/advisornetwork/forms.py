@@ -1,7 +1,7 @@
 from django import forms
 from phonenumber_field.formfields import PhoneNumberField
 from phonenumber_field.widgets import PhoneNumberInternationalFallbackWidget
-from .models import Delegate, PositionPaper
+from .models import Delegate, PositionPaper, PrintDocument
 
 
 class RegistrationForm(forms.Form):
@@ -63,3 +63,11 @@ class PositionPaperForm(forms.ModelForm):
         super(PositionPaperForm, self).__init__(*args, **kwargs)
         self.fields['delegate'].queryset = Delegate.objects.filter(school=school)
 
+
+class PrintDocumentForm(forms.ModelForm):
+    class Meta:
+        model = PrintDocument
+        fields = ['document', 'committee', 'num_copies', 'comments']
+        labels = {
+            'num_copies': "Number of copies (please enter a number)"
+        }

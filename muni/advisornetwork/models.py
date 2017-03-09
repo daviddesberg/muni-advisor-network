@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
 from .validators import validate_pos_paper_extension
+from .conference_data import committee_list
 import os
 
 
@@ -67,6 +68,10 @@ def pos_paper_path(instance, filename):
     return 'school_%s/delegate_%s/%s' % (str(instance.delegate.school.id), str(instance.delegate.id), filename)
 
 
+def print_doc_path(instance, filename):
+    return 'print_queue_documents/%s' % filename
+
+
 class PositionPaper(models.Model):
     delegate = models.ForeignKey(Delegate, related_name="position_papers")
     paper = models.FileField(upload_to=pos_paper_path, validators=[validate_pos_paper_extension])
@@ -75,3 +80,12 @@ class PositionPaper(models.Model):
 
     def __str__(self):
         return "Position paper submitted by %s" % str(self.delegate.name)
+
+
+class PrintDocument(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    num_copies = models.IntegerField()
+    committee = models.CharField(max_length=500, blank=True, choices=zip(committee_list, committee_list))
+    comments = models.TextField(blank=True)
+    document = models.FileField(upload_to=print_doc_path, validators=[validate_pos_paper_extension])
+    processed = models.BooleanField(default=False)
