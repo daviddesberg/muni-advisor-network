@@ -50,7 +50,12 @@ class SchoolAdmin(TotalsumAdmin):
 
 
 class DelegateAdmin(admin.ModelAdmin):
-    pass
+    list_display = [
+        'name',
+        'school',
+        'committee',
+        'position'
+    ]
 
 
 class PositionPaperAdmin(admin.ModelAdmin):
