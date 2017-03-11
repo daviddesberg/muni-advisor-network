@@ -197,7 +197,8 @@ def print_q_submit(request):
         doc_form = PrintDocumentForm(request.POST, request.FILES)
         if doc_form.is_valid():
             doc = doc_form.save()
-            print_q_alert()
+            alert = print_q_alert()
+            alert.send()
             messages.add_message(request, messages.INFO, 'Document queued for printing.')
 
             return HttpResponseRedirect('/print')
