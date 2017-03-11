@@ -6,7 +6,7 @@ from .forms import RegistrationForm, PositionPaperForm, PrintDocumentForm
 from .models import School, Advisor, Delegate, PositionPaper, PrintDocument
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
-from .alert import build_alert, do_alert
+from .alert import build_alert, do_alert, print_q_alert
 from collections import defaultdict
 from .conference_data import committee_list, position_paper_committees
 from django.contrib import messages
@@ -197,7 +197,9 @@ def print_q_submit(request):
         doc_form = PrintDocumentForm(request.POST, request.FILES)
         if doc_form.is_valid():
             doc = doc_form.save()
+            print_q_alert()
             messages.add_message(request, messages.INFO, 'Document queued for printing.')
+
             return HttpResponseRedirect('/print')
 
     doc_form = PrintDocumentForm()

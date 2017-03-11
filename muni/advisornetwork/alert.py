@@ -40,6 +40,17 @@ IP address: %s""" % (
     return email
 
 
+def print_q_alert():
+    email = EmailMessage(
+        "MUNI Alert: Document Added for Printing",
+        "(see subject)",
+        'tech@illinoismun.org',
+        ['tech@illinoismun.org'],
+    )
+
+    return email
+
+
 def do_alert(*args):
     if len(args) == 3:
         alert = build_alert(args[0], args[1], args[2])
