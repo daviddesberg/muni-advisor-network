@@ -321,10 +321,8 @@ I am excited to work with you further to make your pre-conference registration w
 
 Best,
 
-John Hall
-University of Illinois at Urbana-Champaign | Class of 2019
-College of Liberal Arts & Sciences | Global Studies
-Under Secretary General of Registration | MUNI XXII
+Daniel Benson
+Under Secretary General of Registration | MUNI XXIII
             """ % (init_advisor.email, form.cleaned_data["initial_password"])
 
             email = EmailMessage(
