@@ -307,9 +307,10 @@ def register(request):
 
             # Send initial email
             msg = """
-Thank you for registering to attend MUNI XXII!
+You have successfully registered for MUNI XXIII.
 
-We look forward to making our conference a fantastic experience for both you and your delegates. Below you will find your login and password for our Advisor Network. Within two days, you will receive an invoice outlining all required fees you must pay to attend our conference.
+We look forward to making this conference the best one yet! Within a few days, you will
+receive an invoice regarding all necessary fees. Below is your Advisor Network information.
 
 Advisor Network Login: %s
 
@@ -317,7 +318,9 @@ Advisor Network Password: %s
 
 The link to login is: http://advisornetwork.muni.illinoismun.org
 
-I am excited to work with you further to make your pre-conference registration work as stress free and enjoyable as possible. Please feel free to contact me anytime with all of your MUNI related questions, comments, and concerns at registration@illinoismun.org.
+I am very excited to begin working with you to make your pre-conference work as easy and
+stress free as possible. If you have any questions, comments, or concerns, please don’t hesitate
+to contact me at registration@illinoismun.org.
 
 Best,
 
