@@ -322,7 +322,9 @@ I am excited to work with you further to make your pre-conference registration w
 Best,
 
 Daniel Benson
-Under Secretary General of Registration | MUNI XXIII
+University of Illinois at Urbana-Champaign | Political Science '20
+Undersecretary-General of Registration | MUNI XXIII
+Chick Evans Caddie Scholar
             """ % (init_advisor.email, form.cleaned_data["initial_password"])
 
             email = EmailMessage(
