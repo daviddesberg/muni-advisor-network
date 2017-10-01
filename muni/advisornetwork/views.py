@@ -331,7 +331,7 @@ Chick Evans Caddie Scholar
             """ % (init_advisor.email, form.cleaned_data["initial_password"])
 
             email = EmailMessage(
-                "MUNI XXII Registration Confirmation",
+                "MUNI XXIII Registration Confirmation",
                 msg,
                 'tech@illinoismun.org',
                 [init_advisor.email],
