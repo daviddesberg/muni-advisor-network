@@ -24,11 +24,8 @@ class DelegateInline(admin.TabularInline):
 
 
 class SchoolAdmin(TotalsumAdmin):
-    def actual_delegate_count(self, school):
-        return school.delegates.count()
-
-    actual_delegate_count.short_description = "Actual Delegate Count"
-    totalsum_list = ['delegate_count_estimate']
+    # actual_delegate_count.short_description = "Actual Delegate Count"
+    totalsum_list = ['delegate_count_estimate', 'actual_delegate_count']
 
     list_display = [
         'name', 'paid_school_fee',

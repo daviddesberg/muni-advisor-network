@@ -29,6 +29,11 @@ class School(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def get_actual_delegate_count(self):
+        return self.delegates.count()
+
+    actual_delegate_count = property(get_actual_delegate_count)
+
     def __str__(self):
         return self.name
 
