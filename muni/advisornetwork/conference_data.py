@@ -1,20 +1,20 @@
 committee_list = [
     'Ad-Hoc',
-    'Kingdom of Heaven: The Court of Baldwin IV of Jerusalem',
-    'Responsibility to Protect: Coalition Forces (JCC)',
-    'Destiny Awaits: Iraqi Government (JCC)',
-    'The Next Great City: The FIFA Executive Board Committee',
-    'Independence: Nehru\'s Cabinet of 1947',
-    'Island of Mystery: The Roanoke Colony',
-    'UNSC 2017: The World at Crossroads',
-    '1917 Duma',
-    'DISEC',
+    'All Under Heaven: The Royal Court of the Taiping Heavenly Kingdom(JCC)',
+    'All Under Heaven: The Imperial Court of the Great Qing(JCC)',
+    'United Nations Security Council',
+    'The Truman Cabinet',
+    'Enron Board of Directors',
+    'Victorian London: Metropolitan Board of Works',
+    'The Münster Rebellion',
+    'Feudal Japan',
+    'United States Senate',
     'ECOFIN',
     'ECOSOC',
-    'Illinois General Assembly',
+    'DISEC',
     'International Press Delegation',
     'UNHRC',
-    'WHO'
+    'SOCHUM'
 ]
 
 position_paper_committees = sorted([
