@@ -18,11 +18,11 @@ committee_list = [
 ]
 
 position_paper_committees = sorted([
-    'UNSC 2017: The World at Crossroads',
+    'UNSC',
     'DISEC',
     'ECOFIN',
     'ECOSOC',
-    'Illinois General Assembly',
+    'US Senate',
     'UNHRC',
-    'WHO'
+    'SOCHUM'
 ])
